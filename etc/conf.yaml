@@ -1,7 +1,7 @@
 app:
   name: "leaf"
   mode: "dev"
-  app_port: 9091
+  app_port: "127.0.0.1:9091"
   version: "v0.0.1"
   start_time: "2023-08-15"
   machine_id: 1
@@ -31,7 +31,7 @@ redis:
 
 mongo:
   mongo_host: "127.0.0.1"
-  mongo_port: 
+  mongo_port:
   db_name: "leaf"
   username: "shaw"
   password: "shaw123"

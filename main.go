@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github/HsiaoCz/leaf/etc"
 	"github/HsiaoCz/leaf/router"
 	"log"
 	"net/http"
@@ -9,17 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	addr = "127.0.0.1:9091"
-)
-
 func main() {
+	err := etc.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
 	r := gin.New()
 	r.Use(gin.Logger(), gin.Recovery())
 	router.Router(r)
 	srv := http.Server{
 		Handler:      r,
-		Addr:         addr,
+		Addr:         etc.Conf.App.AppPort,
 		ReadTimeout:  1500 * time.Millisecond,
 		WriteTimeout: 1500 * time.Millisecond,
 	}

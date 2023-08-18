@@ -20,7 +20,7 @@ type LeafConf struct {
 type AppConf struct {
 	Name      string `mapstructure:"name"`
 	Mode      string `mapstructure:"dev"`
-	AppPort   int    `mapstructure:"app_port"`
+	AppPort   string `mapstructure:"app_port"`
 	Version   string `mapstructure:"version"`
 	StartTime string `mapstructure:"start_time"`
 	MachineID int    `mapstructure:"machine_id"`
@@ -63,7 +63,7 @@ type MongoConf struct {
 func Init() (err error) {
 	viper.SetConfigName("conf")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./")
+	viper.AddConfigPath("/home/hsiaocz/go/src/leaf/etc")
 	err = viper.ReadInConfig()
 	if err != nil {
 		return
