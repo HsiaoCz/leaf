@@ -28,3 +28,10 @@ redis:
   db: 0
   redis_password:
   poolsize: 100
+
+mongo:
+  mongo_host: "127.0.0.1"
+  mongo_port: 
+  db_name: "leaf"
+  username: "shaw"
+  password: "shaw123"
