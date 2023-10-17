@@ -1,11 +1,17 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 // UserRegister 用户注册
 
-func UserRegister(c *gin.Context) {}
+func UserRegister(c *fiber.Ctx) error {
+	return nil
+}
 
 // UserLogin  用户登录
 
-func UserLogin(c *gin.Context) {}
+func UserLogin(c *fiber.Ctx) error {
+	return nil
+}

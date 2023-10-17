@@ -3,17 +3,17 @@ package router
 import (
 	"github/HsiaoCz/leaf/controller"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
-func Router(r *gin.Engine) {
+func Router(r *fiber.App) {
 
 	// 用户模块
 	user := r.Group("/api/v1/user")
 	{
 		// 用户注册
-		user.POST("/register", controller.UserRegister)
+		user.Post("/register", controller.UserRegister)
 		// 用户登录
-		user.POST("/login", controller.UserLogin)
+		user.Post("/login", controller.UserLogin)
 	}
 }
