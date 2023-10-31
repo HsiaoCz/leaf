@@ -1,9 +1,11 @@
 package middleware
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 // AuthMiddle 登录校验的中间件
 
-func AuthMiddle(c *gin.Context) {
+func AuthMiddle(c *fiber.Ctx) {
 
 }

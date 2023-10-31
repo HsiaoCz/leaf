@@ -7,13 +7,17 @@ import (
 )
 
 func Router(r *fiber.App) {
-
-	// 用户模块
-	user := r.Group("/api/v1/user")
+	app := r.Group("/app")
 	{
-		// 用户注册
-		user.Post("/register", controller.UserRegister)
-		// 用户登录
-		user.Post("/login", controller.UserLogin)
+		v1 := app.Group("/v1")
+		{
+			auth := v1.Group("/auth")
+			{
+				// 用户注册
+				auth.Post("/register", controller.UserRegister)
+				// 用户登录
+				auth.Post("/login", controller.UserLogin)
+			}
+		}
 	}
 }
