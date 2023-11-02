@@ -3,10 +3,10 @@ package router
 import (
 	"github/HsiaoCz/leaf/controller"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 )
 
-func Router(r *fiber.App) {
+func Router(r *gin.Engine) {
 	app := r.Group("/app")
 	{
 		v1 := app.Group("/v1")
@@ -14,9 +14,9 @@ func Router(r *fiber.App) {
 			auth := v1.Group("/auth")
 			{
 				// 用户注册
-				auth.Post("/register", controller.UserRegister)
+				auth.POST("/register", controller.UserRegister)
 				// 用户登录
-				auth.Post("/login", controller.UserLogin)
+				auth.POST("/login", controller.UserLogin)
 			}
 		}
 	}

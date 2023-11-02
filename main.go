@@ -4,8 +4,10 @@ import (
 	"github/HsiaoCz/leaf/etc"
 	"github/HsiaoCz/leaf/router"
 	"log"
+	"net/http"
+	"time"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -13,7 +15,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	r := fiber.New()
+	r := gin.Default()
 	router.Router(r)
-	r.Listen(etc.Conf.App.AppPort)
+	srv := http.Server{
+		Handler:      r,
+		Addr:         etc.Conf.App.AppPort,
+		ReadTimeout:  1500 * time.Millisecond,
+		WriteTimeout: 1500 * time.Millisecond,
+	}
+	log.Fatal(srv.ListenAndServe())
 }
