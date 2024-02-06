@@ -2,26 +2,24 @@ package main
 
 import (
 	"github/HsiaoCz/leaf/etc"
+	"github/HsiaoCz/leaf/logger"
 	"github/HsiaoCz/leaf/router"
-	"log"
-	"net/http"
-	"time"
 
-	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func main() {
-	err := etc.Init()
-	if err != nil {
-		log.Fatal(err)
+	if err := etc.Init(); err != nil {
+		zap.L().Error("etc init err:%v\n", zap.Error(err))
+		return
 	}
-	r := gin.Default()
-	router.Router(r)
-	srv := http.Server{
-		Handler:      r,
-		Addr:         etc.Conf.App.AppPort,
-		ReadTimeout:  1500 * time.Millisecond,
-		WriteTimeout: 1500 * time.Millisecond,
+	if err := logger.InitLogger(logger.NewZapLoggerConf()); err != nil {
+		zap.L().Error("Init logger err:%v\n", zap.Error(err))
+		return
 	}
-	log.Fatal(srv.ListenAndServe())
+	defer zap.L().Sync()
+	if err := router.Router(etc.Conf.App.Mode, etc.Conf.App.AppPort); err != nil {
+		zap.L().Error("http server start fialed:%v\n", zap.Error(err))
+		return
+	}
 }

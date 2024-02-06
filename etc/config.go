@@ -1,10 +1,9 @@
 package etc
 
 import (
-	"log"
-
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 )
 
 var Conf = new(LeafConf)
@@ -63,18 +62,20 @@ type MongoConf struct {
 func Init() (err error) {
 	viper.SetConfigName("conf")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("/home/hsiaocz/go/src/leaf/etc")
+	viper.AddConfigPath("./")
 	err = viper.ReadInConfig()
 	if err != nil {
+		zap.L().Error("viper read config err:%v\n", zap.Error(err))
 		return
 	}
 	if err := viper.Unmarshal(Conf); err != nil {
+		zap.L().Error("viper unmarshal err:%v\n", zap.Error(err))
 		return err
 	}
 
 	viper.WatchConfig()
 	viper.OnConfigChange(func(in fsnotify.Event) {
-		log.Println("配置文件修改了...")
+		zap.L().Info("config changed....")
 		if err := viper.Unmarshal(Conf); err != nil {
 			return
 		}
